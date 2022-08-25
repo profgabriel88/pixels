@@ -79,13 +79,13 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const img = new Image();
 
-const rInput = document.getElementById('range');
+// const rInput = document.getElementById('range');
 
-rInput.addEventListener('input', (e) => {
-  rInput.max = img.width;
-  medias(rInput.value);
-  // console.log(rInput.value)
-})
+// rInput.addEventListener('input', (e) => {
+//   rInput.max = img.width;
+//   blocos(rInput.value);
+//   console.log(rInput.value)
+// })
 
 img.onload = function() {
   let tamanho = this.width * this.height;
@@ -93,13 +93,14 @@ img.onload = function() {
   canvas.height = this.height;
   // ctx.drawImage(this, 0, 0)
   // div.appendChild(this);
-  medias(10);
+  blocos(10);
 }
-img.src = 'dog.jpg';
+img.src = 'mona.jpg';
 
 const grayscale = function (d) {
     let bloco = Math.floor(img.width/d);
     let media = 0;
+    console.log(d);
     ctx.drawImage(img, 0, 0);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
@@ -116,33 +117,60 @@ const grayscale = function (d) {
       media = 0;
     }
     ctx.putImageData(imageData, 0, 0);
-  };
+};
 
-  const medias = function (d) {
-    let bloco = Math.floor(img.width/d);
-    console.log(bloco);
-    let media = 0;
-    let avgR = 0;
-    let avgG = 0;
-    let avgB = 0;
-    ctx.drawImage(img, 0, 0);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    for (let i = 0; i < data.length; i += bloco) {
-      for (let j = i; j < i + bloco; j += 4) {
-        avgR += data[j];
-        avgG += data[j + 1];
-        avgB += data[j + 2];
-      }
-      for (let k = i; k < i + bloco; k++) {
-        data[k] = avgR/d; // red
-        data[k + 1] = avgG/d; // green
-        data[k + 2] = avgB/d; // blue
-      }
-      media = 0;
-      avgR = 0;
-      avgG = 0;
-      avgB = 0;
+const blocos = function (d) {
+  let resultado = document.getElementById('resultado');
+  let bloco = Math.floor(img.width/d);
+  let bloco1 = Math.floor(img.height/d);
+  let media = 0;
+  console.log(d);
+  console.log(bloco);
+  ctx.drawImage(img, 0, 0);
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += bloco) {
+    for (let j = i; j < i + bloco; j += 4) {
+      const avg = (data[j] + data[j + 1] + data[j + 2]) / 3;
+      media += avg;
     }
-    ctx.putImageData(imageData, 0, 0);
-  };
+    let div = document.createElement('div');
+    div.style.backgroundColor = `rgb(${media/d},${media/d},${media/d})`;
+    div.style.width = `10px`;
+    div.style.height = `1px`;
+    resultado.appendChild(div);
+    media = 0;
+    //console.log(i)
+  }
+
+  //ctx.putImageData(imageData, 0, 0);
+};
+
+const medias = function (d) {
+  let bloco = Math.floor(img.width/d);
+  //console.log(bloco);
+  let media = 0;
+  let avgR = 0;
+  let avgG = 0;
+  let avgB = 0;
+  ctx.drawImage(img, 0, 0);
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += bloco) {
+    for (let j = i; j < i + bloco; j += 4) {
+      avgR += data[j];
+      avgG += data[j + 1];
+      avgB += data[j + 2];
+    }
+    for (let k = i; k < i + bloco; k++) {
+      data[k] = avgR/d; // red
+      data[k + 1] = avgG/d; // green
+      data[k + 2] = avgB/d; // blue
+    }
+    media = 0;
+    avgR = 0;
+    avgG = 0;
+    avgB = 0;
+  }
+  ctx.putImageData(imageData, 0, 0);
+};

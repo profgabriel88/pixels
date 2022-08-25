@@ -3,3 +3,50 @@ p {
     line-height: 5px;
 }
 
+#resultado {
+    display: grid;
+    grid-template-columns: 
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px
+    10px;
+}
