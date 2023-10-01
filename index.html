@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +9,56 @@
     <link rel="stylesheet" href="estilo.css">
     <title>Document</title>
 </head>
+
 <body>
-    <canvas id="canvas"></canvas>
-    <!-- <input id="range" min="1" max="20" type="range" step="1"> -->
-    <div id="resultado"></div>
+    <div class="container">
+        <div class="menu">
+            <h1>Pixels</h1>
+            <div class="secao">
+                
+                <label for="arquivo">Selecione o arquivo</label>
+                <input type="file" id="arquivo" name="arquivo">
+                
+            </div>
+            <div class="secao">
+                
+                <label for="pixelCount">Resolução</label>
+                <div>
+                    <input type="range" min="10" max="200" step="10" id="pixelCount">
+                    <p id="pixelCountValue"></p>
+                </div>
+            </div>
+            <div class="secao">
+                <label>Estilo</label>
+                <div>
+                    <input type="radio" name="estilo" id="gameBoy">
+                    <label for="gameBoy">Gameboy</label>
+                </div>
+                <div>
+                    <input type="radio" name="estilo" id="colors">
+                    <label for="colors">Colorido</label>
+                </div>
+                <div>
+                    <input type="radio" name="estilo" id="ascii">
+                    <label for="ascii">Ascii</label>
+                </div>
+            </div>
+            <p>
+                Atenção: Escolha uma imagem quadrada de até 600x600 pixels.
+            </p>
+            <p>
+                O processamento da imagem é feito no navegador pelo seu computador, pode demorar um pouco.
+            </p>
+            <p>
+                Gostou do resultado? Basta clicar com o botão direito do mouse e depois em 'Salvar imagem como'
+            </p>
+        </div>
+        <div class="visual">
+            <canvas width="600px" height="600px" id="canvas"></canvas>
+            <canvas width="600px" height="600px" id="canvas2"></canvas>
+            <div id="resultado"></div>
+        </div>
+    </div>
 </body>
+
 </html>

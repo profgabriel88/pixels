@@ -1,52 +1,126 @@
-p {
-    font-size: 5px;
-    line-height: 5px;
+:root {
+  --border-color: #afafaf;
+  --darkColor: #081820;
+  --mediumColor: #346856;
+  --lightColor1: #88c070;
+  --lightColor2: #e0f8d0;
 }
 
-#resultado {
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+}
+
+#loader-parent {
+    width: 76%;
+  height: 100%;
+  position: fixed;
+  display: none;
+}
+
+#loader {
+    position: absolute;
     display: grid;
-    grid-template-columns: 
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    top: 50vh;
+    left: 50vw;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
     
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px
-    10px;
+    div {
+        width: 20px;
+        aspect-ratio: 1;
+    }
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+#loader div:nth-child(1) {
+    background-color: var(--darkColor);
+}
+
+
+#loader div:nth-child(2) {
+    background-color: var(--mediumColor);
+}
+
+
+#loader div:nth-child(3) {
+    background-color: var(--lightColor1);
+}
+
+
+#loader div:nth-child(4) {
+    background-color: var(--lightColor2);
+}
+
+.menu {
+  border-width: 0 1px 0 0;
+  border-color: var(--border-color);
+  border-style: solid;
+  width: 30%;
+  max-height: 100vh;
+  overflow-y: scroll;
+
+  label {
+    font-size: 1rem;
+    line-height: 2rem;
+    padding: 0.5rem;
+  }
+
+  input {
+    margin: 0.3rem;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    width: 82%;
+  }
+
+  input[type="radio"] {
+    width: 15%;
+    margin: 0.9rem;
+  }
+
+  p, h1 {
+    padding: 0.5rem;
+  }
+
+  div {
+    display: flex;
+    width: 92%;
+  }
+  .secao {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.visual {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.blocos {
+  position: absolute;
 }
