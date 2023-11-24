@@ -1,64 +1,3 @@
-// const density = "Ñ@#W$9876543210?!abc;:+=-,._ ";
-// const tamanho = density.length - 1;
-// const img = new Image();
-// img.crossOrigin = "anonymous";
-// img.src = "./dog.jpg";
-
-// var resultado = document.getElementById("resultado");
-
-// var charcount = 0;
-
-// var caracteres = [];
-
-// const canvas = document.getElementById("canvas");
-// const ctx = canvas.getContext("2d");
-
-// img.onload = function () {
-//   ctx.drawImage(
-//     img,
-//     0,
-//     0,
-//     img.width,
-//     img.height,
-//     0,
-//     0,
-//     canvas.width,
-//     canvas.height
-//   );
-//   img.style.display = "none";
-//   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-//   const data = imageData.data;
-//   for (let i = 0; i < data.length; i += 4) {
-//     const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-//     data[i] = avg; // red
-//     data[i + 1] = avg; // green
-//     data[i + 2] = avg; // blue
-//     let caracter = Math.floor((1 / (255 / avg)) * tamanho);
-
-//     caracteres.push(density[caracter].toString());
-//   }
-
-//   // ctx.putImageData(imageData, 0, 0);
-//   criaAscii();
-// };
-
-// const original = function () {
-//   ctx.drawImage(img, 0, 0);
-// };
-
-// const grayscale = function () {
-//   ctx.drawImage(img, 0, 0);
-//   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-//   const data = imageData.data;
-//   for (let i = 0; i < data.length; i += 4) {
-//     const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-//     data[i] = avg; // red
-//     data[i + 1] = avg; // green
-//     data[i + 2] = avg; // blue
-//   }
-//   ctx.putImageData(imageData, 0, 0);
-// };
-
 const grayscale = function (d) {
   let bloco = Math.floor(img.width / d);
   let media = 0;
@@ -150,6 +89,99 @@ const gameboy = function (d) {
   }
   canvas.style.display = "none";
 };
+
+
+const pontos = function (d) {
+  let bloco = img.width / d;
+  let count = 0;
+  canvas.style.display = "block";
+  let top = canvas.getBoundingClientRect().top;
+  let left = canvas.getBoundingClientRect().left;
+  console.log(d);
+  console.log(bloco);
+  ctx.drawImage(img, 0, 0);
+  ctx2.clearRect(0, 0, 600, 600);
+  for (let i = 0; i < img.width; i += bloco) {
+    let media = 0;
+    for (let j = 0; j < img.width; j += bloco) {
+      const data = ctx.getImageData(j, i, bloco, bloco);
+      if (count == d) {
+        top += bloco;
+        left = canvas.getBoundingClientRect().left;
+        count = 0;
+      }
+      var indice = data.data.length;
+      var rgbR = data.data[indice/2];
+      var rgbG = data.data[(indice/2) + 1];
+      var rgbB = data.data[(indice/2) + 2];
+      if (count == d) {
+        top += bloco;
+        left = canvas.getBoundingClientRect().left;
+        count = 0;
+      }
+
+      ctx2.fillStyle = `rgb(${rgbR}, ${rgbG}, ${rgbB})`;
+      //ctx2.fillRect(j, i, bloco+1, bloco+1);
+      ctx2.beginPath();
+      ctx2.ellipse(j, i, bloco/2, bloco/2, 0, 0, 2 * Math.PI);
+      ctx2.fill();
+
+      media = 0;
+      left += bloco;
+      count++;
+    }
+  }
+  canvas.style.display = "none";
+};
+
+const pontosGradiente = function (d) {
+  let bloco = img.width / d;
+  let count = 0;
+  canvas.style.display = "block";
+  let top = canvas.getBoundingClientRect().top;
+  let left = canvas.getBoundingClientRect().left;
+  console.log(d);
+  console.log(bloco);
+  ctx.drawImage(img, 0, 0);
+  ctx2.clearRect(0, 0, 600, 600);
+  for (let i = 0; i < img.width; i += bloco) {
+    let media = 0;
+    for (let j = 0; j < img.width; j += bloco) {
+      const data = ctx.getImageData(j, i, bloco, bloco);
+      var color = mediaCores(data);
+      if (count == d) {
+        top += bloco;
+        left = canvas.getBoundingClientRect().left;
+        count = 0;
+      }
+      
+      let size = bloco;
+
+      if (color >= 0 && color < 25) size =    Math.round(size/2);
+      if (color >= 25 && color < 50) size =   Math.round(size/3);
+      if (color >= 50 && color < 75) size =   Math.round(size/4);
+      if (color >= 75 && color < 100) size =  Math.round(size/5);
+      if (color >= 100 && color < 125) size = Math.round(size/6);
+      if (color >= 125 && color < 150) size = Math.round(size/7);
+      if (color >= 150 && color < 175) size = Math.round(size/8);
+      if (color >= 175 && color < 200) size = Math.round(size/9);
+      if (color >= 200 && color < 225) size = Math.round(size/10);
+      if (color >= 225 && color < 255) size = Math.round(size/11);
+
+      ctx2.fillStyle = `black`;
+      //ctx2.fillRect(j, i, bloco+1, bloco+1);
+      ctx2.beginPath();
+      ctx2.ellipse(j, i, size, size, 0, 0, 2 * Math.PI);
+      ctx2.fill();
+
+      media = 0;
+      left += bloco;
+      count++;
+    }
+  }
+  canvas.style.display = "none";
+};
+
 
 const blocos = function (d) {
   let bloco = img.width / d;
@@ -278,6 +310,16 @@ radioButtons[2].onclick = function () {
   return;
 };
 
+radioButtons[3].onclick = function () {
+  if (radioButtons[3].checked) pontos(qtdBlocos);
+  return;
+};
+
+radioButtons[4].onclick = function () {
+  if (radioButtons[4].checked) pontosGradiente(qtdBlocos);
+  return;
+};
+
 img.src = "mona.jpg";
 pixelCount.value = 50;
 pixelCountValue.textContent = pixelCount.value;
@@ -301,6 +343,8 @@ pixelCount.onchange = function (e) {
   if (radioButtons[0].checked) gameboy(qtdBlocos);
   if (radioButtons[1].checked) blocos(qtdBlocos);
   if (radioButtons[2].checked) ascii(qtdBlocos);
+  if (radioButtons[3].checked) pontos(qtdBlocos);
+  if (radioButtons[4].checked) pontosGradiente(qtdBlocos);
 };
 
 img.onload = function () {
@@ -315,5 +359,7 @@ img.onload = function () {
     if (e.id == "gameBoy" && e.checked) gameboy(qtdBlocos);
     else if (e.id == "colors" && e.checked) blocos(qtdBlocos);
     else if (e.id == "ascii" && e.checked) ascii(qtdBlocos);
+    else if (e.id == "pontos" && e.checked) pontos(qtdBlocos);
+    else if (e.id == "pontosGradiente" && e.checked) pontosGradiente(qtdBlocos);
   });
 };
