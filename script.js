@@ -242,7 +242,8 @@ function ascii(d) {
       var indice = 0 + ((density.length - 0) / (255 - 0)) * (color - 255);
       
       ctx2.fillStyle = `#000`;
-      
+      ctx2.font = bloco + `px monospace`;
+      console.log(ctx2.font);
       ctx2.fillText(density[Math.floor(indice*-1)], j, i);
       media = 0;
       left += bloco;
