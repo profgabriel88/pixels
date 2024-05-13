@@ -43,6 +43,10 @@
                     <label for="ascii">Ascii</label>
                 </div>
                 <div>
+                    <input type="radio" name="estilo" id="asciiHtml">
+                    <label for="ascii">Ascii HTML</label>
+                </div>
+                <div>
                     <input type="radio" name="estilo" id="pontos">
                     <label for="pontos">Pontos</label>
                 </div>
@@ -51,9 +55,11 @@
                     <label for="pontosGradiente">Pontos p & b</label>
                 </div>
             </div>
-            <p>
-                Atenção: Escolha uma imagem quadrada de até 600x600 pixels.
-            </p>
+            <div class="camera">
+                <video style="width:150px; height: auto;" id="video">Video stream not available.</video>
+                <button id="startbutton">Webcam</button>
+              </div>
+              
             <p>
                 O processamento da imagem é feito no navegador pelo seu computador, pode demorar um pouco.
             </p>
@@ -62,7 +68,7 @@
             </p>
         </div>
         <div class="visual">
-            <canvas width="600px" height="600px" id="canvas"></canvas>
+            <canvas style="width:80%; height: auto;" id="canvas"></canvas>
             <canvas width="600px" height="600px" id="canvas2"></canvas>
             <div id="resultado"></div>
         </div>
