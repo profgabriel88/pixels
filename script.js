@@ -17,6 +17,68 @@ function mediaCores(imageData) {
   return (avgR + avgG + avgB) / 3;
 }
 
+const camadas = function (d) {
+  let bloco = img.width / d;
+  let count = 0;
+  canvas.style.display = "block";
+  resultado.style.display = "none";
+  let top = canvas.getBoundingClientRect().top;
+  let left = canvas.getBoundingClientRect().left;
+
+  let imgHeight = img.height;
+  let imgWidth =  img.width;
+
+  ctx.drawImage(img, 0, 0);
+  ctx2.clearRect(0, 0, 600, 600);
+  for (let i = 0; i < imgHeight; i += bloco) {
+    let media = 0;
+    for (let j = 0; j < imgWidth; j += bloco) {
+      const data = ctx.getImageData(j, i, bloco, bloco);
+      var color = mediaCores(data);
+
+      if (count == d) {
+        top += bloco;
+        left = canvas.getBoundingClientRect().left;
+        count = 0;
+      }
+      ctx2.fillStyle = "#0818200d";
+
+      if (color >= 0 && color < 63) {
+        for (let n = 0; n < 16; n++) {
+          let offX = Math.floor(Math.random() * 10 -5);
+          let offY = Math.floor(Math.random() * 10 -5);
+          ctx2.fillRect(j + offX, i + offY, bloco + 1, bloco + 1);
+        }
+      }
+      if (color >= 63 && color < 128) {
+        for (let n = 0; n < 12; n++) {
+          let offX = Math.floor(Math.random() * 10 -5);
+          let offY = Math.floor(Math.random() * 10 -5);
+          ctx2.fillRect(j + offX, i + offY, bloco + 1, bloco + 1);
+        }
+      }
+      if (color >= 128 && color < 192) {
+        for (let n = 0; n < 8; n++) {
+          let offX = Math.floor(Math.random() * 10 -5);
+          let offY = Math.floor(Math.random() * 10 -5);
+          ctx2.fillRect(j + offX, i + offY, bloco + 1, bloco + 1);
+        }
+      }
+      if (color >= 192 && color < 255) {
+        for (let n = 0; n < 4; n++) {
+          let offX = Math.floor(Math.random() * 10 -5);
+          let offY = Math.floor(Math.random() * 10 -5);
+          ctx2.fillRect(j + offX, i + offY, bloco + 1, bloco + 1);
+        }
+      }
+      media = 0;
+      left += bloco;
+      count++;
+    }
+  }
+  canvas.style.display = "none";
+};
+
 const gameboy = function (d) {
   let bloco = img.width / d;
   let count = 0;
@@ -387,6 +449,11 @@ radioButtons[5].onclick = function () {
   return;
 };
 
+radioButtons[6].onclick = function () {
+  if (radioButtons[6].checked) camadas(qtdBlocos);
+  return;
+};
+
 img.src = "mona.jpg";
 pixelCount.value = 50;
 pixelCountValue.textContent = pixelCount.value;
@@ -413,6 +480,7 @@ pixelCount.onchange = function (e) {
   if (radioButtons[3].checked) asciiHtml(qtdBlocos);
   if (radioButtons[4].checked) pontos(qtdBlocos);
   if (radioButtons[5].checked) pontosGradiente(qtdBlocos);
+  if (radioButtons[6].checked) camadas(qtdBlocos);
 };
 
 img.onload = function () {
@@ -432,5 +500,6 @@ img.onload = function () {
     else if (e.id == "asciiHtml" && e.checked) asciiHtml(qtdBlocos);
     else if (e.id == "pontos" && e.checked) pontos(qtdBlocos);
     else if (e.id == "pontosGradiente" && e.checked) pontosGradiente(qtdBlocos);
+    else if (e.id == "camadas" && e.checked) camadas(qtdBlocos);
   });
 };
